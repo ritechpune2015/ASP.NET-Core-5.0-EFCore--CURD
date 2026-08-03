@@ -29,6 +29,10 @@
               <td>@temp.MobileNo</td>
               <td>@temp.Salary</td>
               <td>@temp.Dept.DeptName</td>
+              <td>
+                  <a asp-action="Edit" asp-route-id="@temp.EmpID"> Edit</a>
+                  <a asp-action="Delete" asp-route-id="@temp.EmpID"> Delete</a>
+              </td>
           </tr>
       }
     </table>

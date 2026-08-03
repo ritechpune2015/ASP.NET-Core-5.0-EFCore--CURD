@@ -2,6 +2,7 @@
 using EFCore2.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Linq;
 
 namespace EFCore2.Controllers
@@ -40,6 +41,37 @@ namespace EFCore2.Controllers
                 return RedirectToAction("Index");
             }
             return View(rec);
+        }
+
+        [HttpGet]
+        public IActionResult Edit(Int64 id)
+        {
+
+            var rec=this.cc.Emps.Find(id);
+            ViewBag.Depts = new SelectList(this.cc.Depts.ToList(), "DID", "DeptName", rec.DeptID);
+            return View(rec);
+
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Emp rec)
+        {
+            if (ModelState.IsValid)
+            {
+                this.cc.Emps.Update(rec);
+                this.cc.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(rec);
+        }
+
+        [HttpGet]
+        public IActionResult Delete(Int64 id)
+        {
+            var rec = this.cc.Emps.Find(id);
+            this.cc.Emps.Remove(rec);
+            this.cc.SaveChanges();
+            return RedirectToAction("Index");
         }
     }
 }
